@@ -8,6 +8,8 @@ const BadRequestError = require('../errors/bad-request-err');
 const BadAuthError = require('../errors/bad-auth-err');
 const ExistEmailError = require('../errors/exist-email-err');
 
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 module.exports.createUser = (req, res, next) => {
   const {
     name, password, email,
@@ -63,7 +65,7 @@ module.exports.login = (req, res, next) => {
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, SEKRET_KEY, { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : SEKRET_KEY, { expiresIn: '7d' });
       res.send({ token });
     })
     .catch(() => {
