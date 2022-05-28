@@ -68,8 +68,6 @@ router.use('/', (req, res, next) => {
   next(new NotFoundError('Неправильный путь.'));
 });
 
-// router.use(errorLogger);
-
 router.use(errors());
 
 router.use(cenralErrors);
