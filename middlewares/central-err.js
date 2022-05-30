@@ -9,5 +9,6 @@ module.exports = (err, req, res, next) => {
         ? 'Ошибка по умолчанию.'
         : message,
     });
+  console.log(err);
   next();
 };

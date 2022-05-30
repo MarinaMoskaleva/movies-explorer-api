@@ -15,9 +15,6 @@ module.exports.createUser = (req, res, next) => {
     name, password, email,
   } = req.body;
 
-  if (!email || !name || !password) {
-    next(new BadRequestError('Поля name, email и password обязательны.'));
-  }
   bcrypt.hash(password, 10)
     .then((hash) => User.create({
       name, password: hash, email,
@@ -52,8 +49,8 @@ module.exports.updateUser = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Переданы некорректные данные при обновлении профиля.'));
-      } else if (err.name === 'CastError') {
-        next(new NotFoundError('Передан некорректный _id пользователя.'));
+      } else if (err.code === 11000) {
+        next(new ExistEmailError('Переданный email зарегистрирован у другого пользователя.'));
       } else {
         next(err);
       }
@@ -82,11 +79,5 @@ module.exports.getCurrentUser = (req, res, next) => {
         res.send({ user });
       }
     })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        next(new NotFoundError('Передан некорректный _id пользователя.'));
-      } else {
-        next(err);
-      }
-    });
+    .catch(next);
 };

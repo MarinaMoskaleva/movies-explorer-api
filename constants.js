@@ -5,7 +5,6 @@ const ERROR_CODE_NOT_FOUND = 404;
 const ERROR_CODE_EXIST_EMAIL = 409;
 const ERROR_CODE_INTERNAL = 500;
 const SEKRET_KEY = 'some-secret-key';
-const AVATAR_REGEX = /^https?:\/\/(www\.)?[a-zA-Z\d-]+\.[\w\d\-.~:/?#[\]@!$&'()*+,;=]{2,}#?$/;
 
 module.exports = {
   ERROR_CODE_BAD_REQUEST,
@@ -15,5 +14,4 @@ module.exports = {
   ERROR_CODE_BAD_AUTH,
   ERROR_CODE_EXIST_EMAIL,
   SEKRET_KEY,
-  AVATAR_REGEX,
 };
